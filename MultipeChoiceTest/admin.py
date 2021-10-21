@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import *
 # Register your models here.
 
+
+
+class QuestionInline(admin.TabularInline):
+    model = Question
+
 @admin.register(Student,
 Teacher,
 Subject,
@@ -11,6 +16,8 @@ Exam,
 StudentExam,
 StudentExamQuestion
 )
+
+
 
 class StudentAdmin(admin.ModelAdmin):
     pass
@@ -29,7 +36,6 @@ class ChoiceAdmin(admin.ModelAdmin):
 
 class ExamAdmin(admin.ModelAdmin):
     pass
-
 class StudentExamAdmin(admin.ModelAdmin):
     pass
 

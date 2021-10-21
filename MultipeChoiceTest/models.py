@@ -32,7 +32,7 @@ class Question(ExamAbstract):
     choices = models.ManyToManyField("Choice", blank=True)
 
     def __str__(self):
-        return ('%s', '%s', self.exam_c, self.choices)
+        return '%s' % (self.exam_c)
 
     
 
@@ -40,15 +40,20 @@ class Choice(ExamAbstract):
     question_c = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
-    def __str__(self):
-        return (self.question_c)
 
+    def __str__(self):
+        return '%s, %s, %s' % (self.question_c, self.title, self.is_correct)
+
+  
 
 class Exam(ExamAbstract):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     questions = models.ManyToManyField(Question, blank=True)
     date_created = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return '%s - %s - %s' % (self.title, self.subject, self.teacher)
 
 
 
