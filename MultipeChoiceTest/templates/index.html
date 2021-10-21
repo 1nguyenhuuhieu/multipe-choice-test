@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h5> Danh sách môn học </h5>
+
+<ul>
+    {% for subject in subjects %}
+    <li> <a href="#">{{ subject }} </a> </li>
+    {% endfor %}
+</ul>
+{% endblock %}
