@@ -5,7 +5,7 @@
 
 <ul>
     {% for subject in subjects %}
-    <li> <a href="#">{{ subject }} </a> </li>
+    <li> <a href="{% url 'subject' subject.id %}">{{ subject }} </a> </li>
     {% endfor %}
 </ul>
 {% endblock %}
