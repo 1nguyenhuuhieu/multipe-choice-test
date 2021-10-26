@@ -1,13 +1,15 @@
+from django.contrib.auth import login, logout
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 
 # Create your views here.
 
-
+@login_required
 def index(request):
     subjects = Subject.objects.all()
 
@@ -16,6 +18,8 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+
+@login_required
 def subject(request, id):
 
     subject = Subject.objects.get(pk=id)
