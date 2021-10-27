@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row">
+
+        {% if request.user.teacher %}
+        <h6>Tài khoản giáo viên</h6>
+        {% else %}
+        <h6>Tài khoản học viên</h6>
+        {% endif %}
+<hr>
+
+
+    <form  method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+
+
+    </div>
+
+
+  
+
+</div>
+{% endblock %}

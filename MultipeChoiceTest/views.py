@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import *
@@ -52,3 +53,45 @@ def subject(request, id):
 
 
     return render(request, 'subject.html', context)
+
+
+@login_required
+def profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('index')
+    else:
+        form = UserProfileForm(instance=request.user)
+
+
+    context = {
+
+        'form': form
+
+    }
+
+    return render(request, 'registration/profile.html', context)
+
+@login_required
+def exam(request, id):
+    exam = Exam.objects.get(pk=id)
+    
+
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, request.POST['title'])
+            return redirect('exam', id=id)
+    else:
+        form = QuestionForm()
+
+    context = {
+        'form': form,
+        'exam': exam
+
+    }
+
+    return render(request, 'exam/exam.html', context )

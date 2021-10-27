@@ -19,7 +19,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm bài thi</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -31,7 +31,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -68,18 +67,16 @@
           <th>Môn thi</th>
           <th>Người tạo</th>
           <th>Ngày tạo</th>
-          <th>Salary</th>
       </tr>
   </thead>
   <tbody>
     {% for exam in exams %}
       <tr>
           <td>{{ exam.id }}</td>
-          <td> {{ exam.title }} </td>
+          <td> <a href="{% url 'exam' exam.id %}"> {{ exam.title }} </a>  </td>
           <td> {{ exam.subject.title }} </td>
           <td>{{ exam.teacher }}</td>
           <td>{{ exam.date_created}}</td>
-          <td>$320,800</td>
       </tr>
     {% endfor %}
 

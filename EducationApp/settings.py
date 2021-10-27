@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'vi-VN'
 
-TIME_ZONE = 'Asian/Ho_chi_minh'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

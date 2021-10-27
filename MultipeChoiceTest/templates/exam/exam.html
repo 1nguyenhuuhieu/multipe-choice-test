@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row">
+
+        <h1>Bài thi {{ exam.title }}</h1>
+
+    </div>
+
+    <hr>
+
+    <form  method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+
+    <hr>
+    <ol>
+        {% for question in exam.question_set.all %}
+     <li>{{ question.title }}</li>   
+        {% endfor %}
+    </ol>
+
+
+  
+
+</div>
+{% endblock %}

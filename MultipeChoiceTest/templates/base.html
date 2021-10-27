@@ -48,7 +48,7 @@
             </li>
           </ul>
 
-            <button class="btn btn-dark ms-3" type="submit"><i class="fas fa-user me-2"></i>{{ request.user.username }}</button>
+            <a href="{% url 'profile' %}" class="btn btn-dark ms-3" type="submit"><i class="fas fa-user me-2"></i>{{ request.user.username }}</a>
             <a href="{% url 'logout' %}" class="btn btn-outline-dark ms-2" type="submit"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a>
         </div>
       </div>
