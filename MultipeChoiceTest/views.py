@@ -77,7 +77,6 @@ def profile(request):
 @login_required
 def exam(request, id):
     exam = Exam.objects.get(pk=id)
-    
 
     if request.method == "POST":
         form = QuestionForm(request.POST)
