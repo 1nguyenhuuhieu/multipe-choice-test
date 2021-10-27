@@ -7,17 +7,17 @@
 
     {% for subject in subjects %}
 
-        <div class="col-4">
-            <div class="card" >
+        <div class="col-3">
+            <div class="card shadow-sm" >
                 <div class="card-body">
                   <h5 class="card-title">{{ subject.title }}</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="{% url 'subject' subject.id %}" class="btn btn-primary">Go somewhere</a>
+        
+        <p class="card-text">Tổng số: {{ subject.exam_set.all.count }} bài thi</p>
+                  <a href="{% url 'subject' subject.id %}" class="btn btn-primary">Xem danh sách bài thi</a>
                 </div>
               </div>
         </div>
 
-        {{ subject.exam_set.all.count }}
 
 
     {% endfor %}

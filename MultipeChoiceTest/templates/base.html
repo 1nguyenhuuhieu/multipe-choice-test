@@ -10,18 +10,23 @@
 
     <title>Phần mềm thi trắc nghiệm</title>
     <script src="https://kit.fontawesome.com/b2208e09de.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning shadow">
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#">Phần mềm thi trắc nghiệm</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Phần mềm thi trắc nghiệm</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Trang chủ</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Danh sách môn thi</a>
@@ -43,8 +48,8 @@
             </li>
           </ul>
 
-            <button class="btn btn-dark ms-3" type="submit"><i class="fas fa-user me-1"></i>Tài khoản</button>
-            <a href="{% url 'logout' %}" class="btn btn-outline-dark ms-2" type="submit"><i class="fas fa-sign-out-alt me-1"></i> Đăng xuất</a>
+            <button class="btn btn-dark ms-3" type="submit"><i class="fas fa-user me-2"></i>{{ request.user.username }}</button>
+            <a href="{% url 'logout' %}" class="btn btn-outline-dark ms-2" type="submit"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a>
         </div>
       </div>
     </nav>
