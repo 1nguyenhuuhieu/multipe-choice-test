@@ -51,6 +51,7 @@ class Exam(ExamAbstract):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     questions = models.ManyToManyField(Question, blank=True)
     date_created = models.DateField(auto_now=True)
+    duration = models.IntegerField()
 
     def __str__(self):
         return '%s - %s - %s' % (self.title, self.subject, self.teacher)
