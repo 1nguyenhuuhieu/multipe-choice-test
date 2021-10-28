@@ -12,9 +12,13 @@ class ExamForm(ModelForm):
         'teacher': forms.HiddenInput(),
         'subject': forms.HiddenInput(),
         'questions': forms.HiddenInput(),
+        'status': forms.HiddenInput(),
         'title': forms.TextInput(attrs={
             'class': 'form-control'
-        })
+        }),
+        'duration': forms.NumberInput(attrs={
+            'class': 'form-control'
+        }),
         }
         labels = {
             'title': "Tên môn thi"

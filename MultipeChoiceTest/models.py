@@ -51,7 +51,17 @@ class Exam(ExamAbstract):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     questions = models.ManyToManyField(Question, blank=True)
     date_created = models.DateField(auto_now=True)
-    duration = models.IntegerField()
+    duration = models.IntegerField(verbose_name="Thời gian làm bài thi")
+    STATUS_CHOICES = [
+        ('wait', 'Chưa mở'),
+        ('open', 'Đang mở'),
+        ('close', 'Đã đóng'),
+    ]
+
+    schedule_open = models.DateTimeField(blank=True, null=True)
+    schedule_close = models.DateTimeField(blank=True, null=True)
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='wait')
 
     def __str__(self):
         return '%s - %s - %s' % (self.title, self.subject, self.teacher)

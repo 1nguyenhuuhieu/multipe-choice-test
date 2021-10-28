@@ -30,8 +30,19 @@
               <div class="mb-3">
                 <label class="form-label" for="{{ form.title.auto_id }}">{{ form.title.label }}</label>
                 {{ form.title }}
+                <label class="form-label mt-3" for="{{ form.duration.auto_id }}">{{ form.duration.label }}</label>
+                {{ form.duration }}
+
+                <label class="form-label mt-3" for="schedule_open">Thời điểm bắt đầu mở thi</label>
+
+                <input type="datetime-local" id="schedule_open"  name="schedule_open" class="form-control">
+                <label class="form-label mt-3" for="schedule_close">Thời điểm đóng bài thi</label>
+
+                <input type="datetime-local" id="schedule_close" name="schedule_close" class="form-control">
+
                 {{ form.subject }}
                 {{ form.teacher }}
+                {{ form.status }}
         
               </div>
       </div>
@@ -68,12 +79,12 @@
 
 
 <hr>
-<table id="example" class="table table-striped" style="width:100%">
+<table id="example" class="table border" style="width:100%">
   <thead>
       <tr>
           <th>ID</th>
           <th>Tên bài thi</th>
-          <th>Thời gian làm bài</th>
+          <th>Trạng thái</th>
           <th>Môn thi</th>
           <th>Người tạo</th>
           <th>Ngày tạo</th>
@@ -83,8 +94,8 @@
     {% for exam in exams %}
       <tr>
           <td>{{ exam.id }}</td>
-          <td> <a href="{% url 'exam' exam.id %}"> {{ exam.title }} </a>  </td>
-          <td>{{ exam.duration }}</td>
+          <td> <a href="{% url 'exam' exam.id %}" class="text-decoration-none"> {{ exam.title }} </a>  </td>
+          <td>{{ exam.get_status_display }}</td>
           <td> {{ exam.subject.title }} </td>
           <td>{{ exam.teacher }}</td>
           <td>{{ exam.date_created}}</td>
@@ -96,7 +107,11 @@
 
 <script>
   $(document).ready(function() {
-    $('#example').DataTable();
+    $('#example').DataTable(
+      {
+        "order": [[ 0, 'desc' ]]
+      }
+    );
 } );
 </script>
 
