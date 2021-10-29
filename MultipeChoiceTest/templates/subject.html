@@ -6,6 +6,9 @@
 
     <div class="col-12 mb-3">
 
+      <h5>Danh sách bài thi môn: {{ subject.title }}</h5>
+      <hr>
+
       
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -78,14 +81,13 @@
 
 
 
-<hr>
-<table id="example" class="table border" style="width:100%">
+<div class="table-responsive">
+<table id="example" class="table table-bordered table-hover" style="width:100%">
   <thead>
       <tr>
           <th>ID</th>
           <th>Tên bài thi</th>
           <th>Trạng thái</th>
-          <th>Môn thi</th>
           <th>Người tạo</th>
           <th>Ngày tạo</th>
       </tr>
@@ -96,7 +98,6 @@
           <td>{{ exam.id }}</td>
           <td> <a href="{% url 'exam' exam.id %}" class="text-decoration-none"> {{ exam.title }} </a>  </td>
           <td>{{ exam.get_status_display }}</td>
-          <td> {{ exam.subject.title }} </td>
           <td>{{ exam.teacher }}</td>
           <td>{{ exam.date_created}}</td>
       </tr>
@@ -104,6 +105,8 @@
 
       </tbody>
       </table>
+
+    </div>
 
 <script>
   $(document).ready(function() {
