@@ -5,27 +5,15 @@
 <div class="container mt-5">
     <div class="row">
 
-        <h1>Bài thi {{ exam.title }}</h1>
+        <h5>Chi tiết bài thi {{ exam.title }}</h5>
+        <ul>
+            <li>{{ exam.subject.title }}</li>
+        </ul>
 
     </div>
-
     <hr>
 
-    <form  method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update">
-    </form>
 
-    <hr>
-    <ol>
-        {% for question in exam.question_set.all %}
-     <li>{{ question.title }}</li>   
-        {% endfor %}
-    </ol>
-
-
-  
 
 </div>
 {% endblock %}
