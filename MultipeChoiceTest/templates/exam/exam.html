@@ -5,13 +5,110 @@
 <div class="container mt-5">
     <div class="row">
 
-        <h5>Chi tiết bài thi {{ exam.title }}</h5>
-        <ul>
-            <li>{{ exam.subject.title }}</li>
-        </ul>
+        <div class="col-lg-4">
+            <div class="card shadow-sm" >
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title m-0">Chi tiết bài thi</h5>
+                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editExamModal"><i class="fas fa-edit me-2"></i>Chỉnh sửa</a>
+
+                    </div>
+          
+
+                  <hr>
+                  <ul>
+                              
+                    <li>Tên bài thi: {{ exam.title }} </li>
+                    <li>Trạng thái: {{ exam.get_status_display }} </li>
+                    <li>Số học viên đã tham gia thi: {{ exam.studentexam_set.all.count }}</li>
+    
+                    <li>Môn thi: {{ exam.subject.title }}</li>
+                    <li>Ngày tạo: {{ exam.date_created }}</li>
+                    <li>Người tạo: {{ exam.teacher }}</li>
+                    <li>Thời gian làm bài thi: {{ exam.duration }} phút</li>
+                    <li>Số câu hỏi: {{ exam.question_set.all.count }}</li>
+    
+    
+                  </ul>
+                </div>
+              </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="editExamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa bài thi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+        <div class="modal-body">
+           
+
+          {{ exam_form }}
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="editExamBtn">Save changes</button>
+        </div>
+    </form>
+
+      </div>
+    </div>
+  </div>
+
+
+    
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title m-0">Danh sách câu hỏi</h5>
+                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addQuestionModal"><i class="fas fa-plus me-2"></i>Thêm câu hỏi</a>
+
+                    </div>
+         
+                    <hr>
+                    <p class="card-text">
+                        <ul>
+                            {% for question in questions %}
+                            <li>{{ question.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+            </div>
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{ question_form }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+        </div>
+
 
     </div>
-    <hr>
 
 
 

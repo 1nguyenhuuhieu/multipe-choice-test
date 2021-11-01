@@ -49,7 +49,6 @@ class Choice(ExamAbstract):
 class Exam(ExamAbstract):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    questions = models.ManyToManyField(Question, blank=True)
     date_created = models.DateField(auto_now=True)
     duration = models.IntegerField(verbose_name="Thời gian làm bài thi")
     STATUS_CHOICES = [
@@ -58,8 +57,6 @@ class Exam(ExamAbstract):
         ('close', 'Đã đóng'),
     ]
 
-    schedule_open = models.DateTimeField(blank=True, null=True)
-    schedule_close = models.DateTimeField(blank=True, null=True)
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='wait')
 
@@ -72,8 +69,6 @@ class StudentExam(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return (self.student, self.exam)
 
 class StudentExamQuestion(models.Model):
     student_exam = models.ForeignKey(StudentExam, on_delete=models.CASCADE)

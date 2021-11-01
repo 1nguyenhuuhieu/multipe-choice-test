@@ -1,8 +1,16 @@
 from django import forms
 from django.forms import ModelForm
+import datetime
 
 from .models import *
 from django.contrib.auth.models import User
+
+class DateTimeInput(forms.DateTimeInput):
+    input_type = 'datetime-local'
+    def __init__(self, **kwargs):
+        kwargs["format"] = "%Y-%m-%dT%H:%M"
+        super().__init__(**kwargs)
+
 
 class ExamForm(ModelForm):
     class Meta:
@@ -11,14 +19,16 @@ class ExamForm(ModelForm):
         widgets = {
         'teacher': forms.HiddenInput(),
         'subject': forms.HiddenInput(),
-        'questions': forms.HiddenInput(),
-        'status': forms.HiddenInput(),
         'title': forms.TextInput(attrs={
             'class': 'form-control'
         }),
         'duration': forms.NumberInput(attrs={
             'class': 'form-control'
         }),
+        'status': forms.Select(attrs={
+            'class': 'form-select'
+        }),
+
         }
         labels = {
             'title': "Tên môn thi"
@@ -36,5 +46,4 @@ class QuestionForm(ModelForm):
         fields = '__all__'
         widgets = {
             'exam_c': forms.HiddenInput(),
-            'choices': forms.HiddenInput()
         }

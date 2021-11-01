@@ -45,7 +45,8 @@ def subject(request, id):
         form = ExamForm(initial=
         {
             'subject': subject.id,
-            'teacher': request.user.teacher
+            'teacher': request.user.teacher,
+            'status': 'wait'
         })
 
     context['form'] = form
@@ -77,19 +78,20 @@ def profile(request):
 @login_required
 def exam(request, id):
     exam = Exam.objects.get(pk=id)
+    exam_form = ExamForm(request.POST or None, instance=exam)
+    questions = Question.objects.filter(exam_c=exam)
 
-    if request.method == "POST":
-        form = QuestionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, request.POST['title'])
-            return redirect('exam', id=id)
-    else:
-        form = QuestionForm()
+    question_form = QuestionForm()
+
+    if 'editExamBtn' in request.POST and exam_form.is_valid():
+        exam_form.save()
+        return redirect('exam', id=id)
 
     context = {
-        'form': form,
-        'exam': exam
+        'exam': exam,
+        'exam_form': exam_form,
+        'questions': questions,
+        'question_form': question_form
 
     }
 
