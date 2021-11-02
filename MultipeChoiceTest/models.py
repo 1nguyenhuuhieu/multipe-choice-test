@@ -17,7 +17,7 @@ class Teacher(models.Model):
         return self.user.username
 
 class ExamAbstract(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.TextField()
 
     class Meta:
         abstract = True
@@ -29,7 +29,6 @@ class Subject(ExamAbstract):
 
 class Question(ExamAbstract):
     exam_c = models.ForeignKey("Exam", on_delete=models.CASCADE)
-    choices = models.ManyToManyField("Choice", blank=True)
 
     def __str__(self):
         return '%s' % (self.exam_c)

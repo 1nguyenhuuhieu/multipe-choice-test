@@ -41,7 +41,7 @@
           <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa bài thi</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="post">
+        <form method="post" >
             {% csrf_token %}
         <div class="modal-body">
            
@@ -51,8 +51,9 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" name="editExamBtn">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-danger" name="deleteExamBtn">Xóa bài thi</button>
+          <button type="submit" class="btn btn-primary" name="editExamBtn">Cập nhập</button>
         </div>
     </form>
 
@@ -74,11 +75,104 @@
          
                     <hr>
                     <p class="card-text">
-                        <ul>
+
+                        <ol>
                             {% for question in questions %}
-                            <li>{{ question.title }}</li>
-                            {% endfor %}
-                        </ul>
+                            <a href="#"  class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#questionModal{{question.id}}"> <li> {{ question.title }}</li> </a>
+
+
+<!-- Modal -->
+<div class="modal fade" id="questionModal{{question.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa câu hỏi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form method="post" id="editQuestionForm" class="needs-validation" novalidate>
+        {% csrf_token %}
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Câu hỏi</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="questionTitle" required >{{ question.title }}
+          </textarea>
+          <div class="invalid-feedback">
+            Thêm nội dung câu hỏi
+          </div>
+        </div>
+<p>Câu trả lời - Tích chọn vào câu trả lời đúng</p>
+{% for choice in question.choice_set.all %}
+<div class="form-check mt-2">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault{{choice.id}}" value="{{choice.id}}" required {% if choice.is_correct %} checked {% endif %}>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="" required>{{ choice.title }}</textarea>
+    <div class="invalid-feedback">
+      Thêm câu trả lời
+    </div>
+</div>
+
+{% endfor %}
+  <input type="hidden" id="radioChoiceUpdateQuestion" name="is_correct_check">
+
+
+
+<!-- Xem radio button nào được check -->
+        <Script>
+          $('#editQuestionForm input').on('change', function() {
+            var radioB = $('input[name=flexRadioDefault]:checked', '#editQuestionForm').val()
+
+
+            document.getElementById('radioChoiceUpdateQuestion').setAttribute("value", radioB)
+
+          }
+          )
+
+   
+        </Script>
+
+      <Script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+'use strict'
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+var forms = document.querySelectorAll('.needs-validation')
+
+// Loop over them and prevent submission
+Array.prototype.slice.call(forms)
+  .forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+      </Script>
+        
+    
+    
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="submit" class="btn btn-danger" name="deleteQuestionBtn" value="{{question.id}}">Xóa câu hỏi</button>
+        <button type="submit" class="btn btn-primary" name="updateQuestionBtn"  value="{{question.id}}">Cập nhập câu hỏi</button>
+      </div>
+
+    </form>
+
+
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+                        </ol>
                     </p>
                 </div>
             </div>
@@ -90,16 +184,101 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form method="post" id="addQuestionForm" class="needs-validation" novalidate>
+          {% csrf_token %}
         <div class="modal-body">
-          {{ question_form }}
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Câu hỏi</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="questionTitle" required></textarea>
+            <div class="invalid-feedback">
+              Thêm nội dung câu hỏi
+            </div>
+          </div>
+<p>Câu trả lời - Tích chọn vào câu trả lời đúng</p>
+    
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="choice1" required>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="choice1" required></textarea>
+              <div class="invalid-feedback">
+                Thêm câu trả lời
+              </div>
+          </div>
+ 
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="choice2" required>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="choice2" required></textarea>
+              <div class="invalid-feedback">
+                Thêm câu trả lời
+              </div>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="choice3" required>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="choice3" required></textarea>
+              <div class="invalid-feedback">
+                Thêm câu trả lời
+              </div>
+          </div>
+      
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" value="choice4" required>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="choice4" required></textarea>
+              <div class="invalid-feedback">
+                Thêm câu trả lời
+              </div>
+          </div>
+          <input type="hidden" name="radioChoice" id="radioChoice1">
+
+
+ <!-- Xem radio button nào được check -->
+          <Script>
+            $('#addQuestionForm input').on('change', function() {
+              var radioB = $('input[name=flexRadioDefault]:checked', '#addQuestionForm').val()
+
+
+              document.getElementById('radioChoice1').setAttribute("value", radioB)
+
+            }
+            )
+
+     
+          </Script>
+
+        <Script>
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+        </Script>
+          
+      
+      
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary" name="addQuestionBtn">Save changes</button>
         </div>
+
+      </form>
       </div>
     </div>
   </div>

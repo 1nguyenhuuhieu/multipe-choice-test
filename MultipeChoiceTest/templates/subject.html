@@ -35,14 +35,6 @@
                 {{ form.title }}
                 <label class="form-label mt-3" for="{{ form.duration.auto_id }}">{{ form.duration.label }}</label>
                 {{ form.duration }}
-
-                <label class="form-label mt-3" for="schedule_open">Thời điểm bắt đầu mở thi</label>
-
-                <input type="datetime-local" id="schedule_open"  name="schedule_open" class="form-control">
-                <label class="form-label mt-3" for="schedule_close">Thời điểm đóng bài thi</label>
-
-                <input type="datetime-local" id="schedule_close" name="schedule_close" class="form-control">
-
                 {{ form.subject }}
                 {{ form.teacher }}
                 <input type="hidden" name="status" id="" value="wait">
