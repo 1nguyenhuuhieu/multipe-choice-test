@@ -7,7 +7,7 @@
 
         <div class="col-lg-4">
             <div class="card shadow-sm" >
-                <div class="card-body">
+                <div class="card-body ">
                     
                         <h5 class="card-title m-0">Chi tiết bài thi</h5>
 
@@ -17,10 +17,11 @@
                   <ul>
                               
                     <li>Tên bài thi: {{ exam.title }} </li>
+                    <li>Môn thi: {{ exam.subject.title }}</li>
+
                     <li>Trạng thái: {{ exam.get_status_display }} </li>
                     <li>Số học viên đã tham gia thi: {{ exam.studentexam_set.all.count }}</li>
     
-                    <li>Môn thi: {{ exam.subject.title }}</li>
                     <li>Ngày tạo: {{ exam.date_created }}</li>
                     <li>Người tạo: {{ exam.teacher }}</li>
                     <li>Thời gian làm bài thi: {{ exam.duration }} phút</li>
@@ -29,7 +30,13 @@
     
                   </ul>
 
-                <a href="#" class="btn btn-primary" >Tham gia thi</a>
+
+
+                <a href="#" class="btn btn-primary 
+                {% if exam.status != 'open' %}
+                disabled
+                {% endif %}
+                " >Tham gia thi</a>
 
                 </div>
 
