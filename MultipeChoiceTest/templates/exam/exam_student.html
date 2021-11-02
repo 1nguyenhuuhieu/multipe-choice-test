@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm" >
+                <div class="card-body">
+                    
+                        <h5 class="card-title m-0">Chi tiết bài thi</h5>
+
+          
+
+                  <hr>
+                  <ul>
+                              
+                    <li>Tên bài thi: {{ exam.title }} </li>
+                    <li>Trạng thái: {{ exam.get_status_display }} </li>
+                    <li>Số học viên đã tham gia thi: {{ exam.studentexam_set.all.count }}</li>
+    
+                    <li>Môn thi: {{ exam.subject.title }}</li>
+                    <li>Ngày tạo: {{ exam.date_created }}</li>
+                    <li>Người tạo: {{ exam.teacher }}</li>
+                    <li>Thời gian làm bài thi: {{ exam.duration }} phút</li>
+                    <li>Số câu hỏi: {{ exam.question_set.all.count }}</li>
+    
+    
+                  </ul>
+
+                <a href="#" class="btn btn-primary" >Tham gia thi</a>
+
+                </div>
+
+
+              </div>
+
+
+    
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

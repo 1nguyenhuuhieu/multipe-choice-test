@@ -6,12 +6,14 @@ from django.db.models.base import Model
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subjects = models.ManyToManyField('Subject', blank=True, verbose_name="Môn thi")
 
     def __str__(self):
         return self.user.username
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subjects = models.ManyToManyField('Subject', blank=True, verbose_name="Môn thi")
 
     def __str__(self):
         return self.user.username

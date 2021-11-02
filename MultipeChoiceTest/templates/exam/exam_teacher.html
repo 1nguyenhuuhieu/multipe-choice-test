@@ -105,7 +105,7 @@
 {% for choice in question.choice_set.all %}
 <div class="form-check mt-2">
   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault{{choice.id}}" value="{{choice.id}}" required {% if choice.is_correct %} checked {% endif %}>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="" required>{{ choice.title }}</textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="choice_title{{choice.id}}" required>{{ choice.title }}</textarea>
     <div class="invalid-feedback">
       Thêm câu trả lời
     </div>

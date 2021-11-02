@@ -1,5 +1,6 @@
 from django import forms
-from django.forms import ModelForm
+from django.db.models import fields
+from django.forms import ModelForm, widgets
 import datetime
 
 from .models import *
@@ -39,6 +40,57 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = User
         fields = ['password','first_name', 'last_name', 'email']
+        widgets = {
+            'password': forms.TextInput(
+                attrs={
+                    'class': 'form-control mb-2'
+                }
+            ),
+            'first_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control mb-2'
+                }
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control mb-2'
+                }
+            ),
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control mb-2'
+                }
+            )
+        }
+
+class TeacherForm(ModelForm):
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+        widgets = {
+            'user': forms.HiddenInput(),
+            'subjects': forms.SelectMultiple(
+                attrs={
+                'class': 'form-select'
+
+                }
+
+            )
+        }
+class StudentForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+        widgets = {
+            'user': forms.HiddenInput(),
+            'subjects': forms.SelectMultiple(
+                attrs={
+                'class': 'form-select'
+
+                }
+
+            )
+        }
 
 class QuestionForm(ModelForm):
     class Meta:
