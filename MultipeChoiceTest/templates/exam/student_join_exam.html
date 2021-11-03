@@ -29,19 +29,20 @@
                 <li>Đã trả lời: {{ studentexam.studentexamquestion_set.count }}/{{questions.count}}</li>
             </ul>
             {% if  is_acept_test %}
-            <p>Hệ thống sẽ tự động kết thúc bài thi khi hết giờ</p>
+            <p>Bạn sẽ không có quyền lưu đáp án khi hết giờ thi. Nhấn Nạp bài thi để hoàn thành phần thi của mình.</p>
             {% else %}
-            <p class="text-danger">Hết giờ thi</p>
+            <p class="text-danger">Hết giờ thi. Nhấn Nạp bài thi để hoàn thành phần thi của mình.</p>
 
             {% endif %}
 
-
-            <button class="btn btn-danger
-            {% if not is_acept_test %}
+            <form  method="post">
+                {% csrf_token %}
+            <button class="btn btn-success btn-lg
+            {% if studentexam.is_finish %}
             disabled
             {% endif %}
-            ">Kết thúc bài thi</button>
-
+            " type="submit" name="finishExamBtn" value="{{exam.id}}">Nạp bài thi</button>
+        </form>
 
             <hr>
 

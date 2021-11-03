@@ -20,4 +20,4 @@ class TeacherAdmin(admin.ModelAdmin):
 
 @admin.register(StudentExam)
 class StudentExamAdmin(admin.ModelAdmin):
-    list_display =  ('student', 'exam', 'joined')
+    list_display =  ('student', 'exam', 'joined', 'is_finish')

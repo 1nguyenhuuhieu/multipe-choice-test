@@ -299,6 +299,11 @@ def student_exam(request,id):
             new_studentexamquestion.student_choice = choice
             new_studentexamquestion.save()
             return redirect('student_exam', id=id)
+    
+    if request.method == "POST" and 'finishExamBtn' in request.POST:
+        studentexam.is_finish = True
+        studentexam.save()
+        return redirect('student_exam', id=id)
         
     context = {
         'questions': questions,

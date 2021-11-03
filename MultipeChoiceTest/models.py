@@ -69,7 +69,8 @@ class Exam(ExamAbstract):
 class StudentExam(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    joined = models.DateTimeField(auto_now=True)
+    joined = models.DateTimeField(auto_now_add=True)
+    is_finish = models.BooleanField(default=False)
     
     class Meta:
         unique_together = ['student', 'exam']
