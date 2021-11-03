@@ -264,6 +264,7 @@ def student_exam(request,id):
 
     limit_time = end_time - now
     limit_minutes = (limit_time.seconds % 3600) // 60
+    print(limit_minutes)
     if limit_minutes > 0:
         is_acept_test = True
     else:

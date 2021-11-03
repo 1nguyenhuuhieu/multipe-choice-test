@@ -37,7 +37,7 @@ class ChoiceAdmin(admin.ModelAdmin):
 class ExamAdmin(admin.ModelAdmin):
     pass
 class StudentExamAdmin(admin.ModelAdmin):
-    pass
+    fields = ('student',)
 
 class StudentExamQuestionAdmin(admin.ModelAdmin):
     pass

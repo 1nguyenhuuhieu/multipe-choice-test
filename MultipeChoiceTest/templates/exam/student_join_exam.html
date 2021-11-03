@@ -19,7 +19,8 @@
                 {% load humanize%}
            
             <h4 class="mb-4 mt-5">{{ questions.0.exam_c.subject.title }} / {{ questions.0.exam_c.title }}</h4>
-            <ul><li>Thời gian làm bài thi: {{ studentexam.exam.duration }} phút</li>
+            <ul><li>Người tạo: {{ studentexam.exam.teacher }}</li>
+                <li>Thời gian làm bài thi: {{ studentexam.exam.duration }} phút</li>
                 <li>Thời gian tham gia thi: {{ studentexam.joined }}</li>
                 <li>Thời gian hết giờ thi: {{ end_time }}</li>
                 <li>Thời gian đã thi: {{ studentexam.joined|naturaltime }} </li>
