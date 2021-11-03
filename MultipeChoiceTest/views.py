@@ -113,8 +113,14 @@ def profile(request):
     else:
         try:
             subject_form = TeacherForm(instance=request.user.teacher)
+            exams = Exam.objects.filter(
+                teacher=request.user.teacher
+            )
         except:
             subject_form = TeacherForm(instance=request.user.student)
+            exams = Exam.objects.filter(
+                studentexam__student = request.user.student
+            )
 
 
 
@@ -122,6 +128,7 @@ def profile(request):
 
         'user_form': user_form,
         'teacher_form': subject_form,
+        'exams': exams
 
     }
 
@@ -263,8 +270,10 @@ def student_exam(request,id):
     end_time = studentexam.joined + datetime.timedelta(minutes = exam.duration)
 
     limit_time = end_time - now
-    limit_minutes = (limit_time.seconds % 3600) // 60
-    print(limit_minutes)
+    if limit_time.days < 0:
+        limit_minutes = 0
+    else:
+        limit_minutes = (limit_time.seconds % 3600) // 60
     if limit_minutes > 0:
         is_acept_test = True
     else:

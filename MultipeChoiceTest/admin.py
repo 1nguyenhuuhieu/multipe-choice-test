@@ -7,37 +7,17 @@ from .models import *
 class QuestionInline(admin.TabularInline):
     model = Question
 
-@admin.register(Student,
-Teacher,
-Subject,
-Question,
-Choice,
-Exam,
-StudentExam,
-StudentExamQuestion
-)
-
-
+@admin.register(Student)
 
 class StudentAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(Teacher)
+
 class TeacherAdmin(admin.ModelAdmin):
     pass
 
-class SubjectAdmin(admin.ModelAdmin):
-    pass
-
-class QuestionAdmin(admin.ModelAdmin):
-    pass
-
-class ChoiceAdmin(admin.ModelAdmin):
-    pass
-
-class ExamAdmin(admin.ModelAdmin):
-    pass
+@admin.register(StudentExam)
 class StudentExamAdmin(admin.ModelAdmin):
-    fields = ('student',)
-
-class StudentExamQuestionAdmin(admin.ModelAdmin):
-    pass
+    list_display =  ('student', 'exam', 'joined')

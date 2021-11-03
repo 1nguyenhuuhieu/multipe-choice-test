@@ -74,6 +74,21 @@
     </form>
 </div>
     </div>
+<hr>
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <h5>Bài thi của tôi</h5>
+        <ol>
+          {% for exam in exams %}
+          <a href="{% url 'exam' exam.id %}" class="text-decoration-none">
+            <li> 
+            {{ exam.title}} - {{ exam.subject.title }}</li></a> 
+          {% endfor %}
+        </ol>
+
+      </div>
+
+    </div>
 
 
   
