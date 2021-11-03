@@ -33,7 +33,7 @@ class Question(ExamAbstract):
     exam_c = models.ForeignKey("Exam", on_delete=models.CASCADE)
 
     def __str__(self):
-        return '%s' % (self.exam_c)
+        return self.title
 
     
 
@@ -43,7 +43,7 @@ class Choice(ExamAbstract):
 
 
     def __str__(self):
-        return '%s, %s, %s' % (self.question_c, self.title, self.is_correct)
+        return self.title
 
   
 
@@ -69,6 +69,12 @@ class Exam(ExamAbstract):
 class StudentExam(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    joined = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ['student', 'exam']
+
+        
 
 
 class StudentExamQuestion(models.Model):
@@ -76,8 +82,6 @@ class StudentExamQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     student_choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return (self.student_exam, self.question, self.student_choice)
 
     
 

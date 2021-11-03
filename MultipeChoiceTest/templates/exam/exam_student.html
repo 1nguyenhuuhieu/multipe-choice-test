@@ -29,14 +29,25 @@
     
     
                   </ul>
+                  {% if student_exam %}
+                  <p class="card-text text-danger">
+                     Bạn đã tham gia bài thi vào: {{ student_exam.joined }}
+                  </p>
+                  {% endif %}
 
+                  <form  method="post">
+                    {% csrf_token %}
 
-
-                <a href="#" class="btn btn-primary 
-                {% if exam.status != 'open' %}
+                  
+                <button type="submit" name="joinExamBtn" class="me-2 btn btn-primary 
+                {% if not is_join %}
                 disabled
                 {% endif %}
-                " >Tham gia thi</a>
+                " >Tham gia thi</button>
+
+                <a href="{% url 'student_exam' exam.id %}" class="btn btn-success">Tiếp tục thi</a>
+
+              </form>
 
                 </div>
 

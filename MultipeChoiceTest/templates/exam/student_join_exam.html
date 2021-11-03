@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.style.position = 'relative';
+    body.setAttribute("data-bs-spy", "scroll");
+    body.setAttribute("data-bs-target", "#list-example");
+    body.setAttribute("data-bs-offset", "0");
+    body.setAttribute("tabindex", "0");
+</script>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-3 bg-light border rounded" >
+            <div class="sticky-top pt-4">
+
+                {% load humanize%}
+           
+            <h4 class="mb-4 mt-5">{{ questions.0.exam_c.subject.title }} / {{ questions.0.exam_c.title }}</h4>
+            <ul><li>Thời gian làm bài thi: {{ studentexam.exam.duration }} phút</li>
+                <li>Thời gian tham gia thi: {{ studentexam.joined }}</li>
+                <li>Thời gian hết giờ thi: {{ end_time }}</li>
+                <li>Thời gian đã thi: {{ studentexam.joined|naturaltime }} </li>
+
+                <li>Thời gian còn lại: {{ limit_time }} phút</li>
+                <li>Đã trả lời: {{ studentexam.studentexamquestion_set.count }}/{{questions.count}}</li>
+            </ul>
+            {% if  is_acept_test %}
+            <p>Hệ thống sẽ tự động kết thúc bài thi khi hết giờ</p>
+            {% else %}
+            <p class="text-danger">Hết giờ thi</p>
+
+            {% endif %}
+
+
+            <button class="btn btn-danger
+            {% if not is_acept_test %}
+            disabled
+            {% endif %}
+            ">Kết thúc bài thi</button>
+
+
+            <hr>
+
+            <div id="list-example" class="list-group mb-5">
+                {% for question in questions %}
+                <a class="list-group-item list-group-item-action 
+
+                {% if question.studentexamquestion_set.all.0.student_choice.id %}
+                list-group-item-success
+                {% endif %}
+
+                
+
+                " href="#question{{ forloop.counter }}">Câu số {{ forloop.counter }}</a>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+
+        <div class="col" >
+
+    
+            {% for question in questions %}
+            <div class="row" >
+                <div class="col-12">
+<div class="card mb-3 rouded shadow-sm " id="question{{ forloop.counter }}"  >
+    <form method="post">
+        {% csrf_token %}
+
+
+    <div class="card-header " >
+     <h5 >Câu số {{ forloop.counter }}</h5>   
+      </div>
+    
+    <div class="card-body">
+
+    <h6 class="card-title">{{ question.title }}</h6>
+    <hr>
+<div class="row">
+            {% for choice in question.choice_set.all %}
+            <div class="col-6">
+
+
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault{{question.id}}" id="flexRadioDefault{{choice.id}}" value="{{ choice.id }}"
+                    {% if question.studentexamquestion_set.all.0.student_choice.id == choice.id %}
+                    checked
+                    {% endif %}
+                    >
+                    <label class="form-check-label" for="flexRadioDefault{{choice.id}}">
+                        {{ choice.title }}
+                    </label>
+                  </div>
+                  
+
+                
+            </div>
+            {% endfor %}
+        </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit"  class="btn btn-primary
+            {% if not is_acept_test %}
+            disabled
+            {% endif %}
+            " name="saveChoiceBtn" id="IDsavechoiceBtn" onclick="radioValueFunction()" value="{{question.id}}">Lưu đáp án</button>
+        </div>
+        </form>
+        </div>
+  
+            {% endfor %}
+        </div>
+        </div>
+
+    </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+ 
+{% endblock %}

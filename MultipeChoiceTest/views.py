@@ -8,6 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 
+import datetime
+from django.utils import timezone
+
 # Create your views here.
 
 @login_required
@@ -135,6 +138,8 @@ def exam(request, id):
     exam = Exam.objects.get(pk=id)
     subject_id = exam.subject.id
     if is_teacher:
+        exam = Exam.objects.get(pk=id, teacher=lgin_user.teacher)
+
         exam_form = ExamForm(request.POST or None, instance=exam)
         questions = Question.objects.filter(exam_c=exam)
 
@@ -213,9 +218,84 @@ def exam(request, id):
 
         return render(request, 'exam/exam_teacher.html', context )
     else:
+        exam = Exam.objects.get(pk=id)
+        
+        if request.method == "POST" and "joinExamBtn" in request.POST:
+            new_studentexam = StudentExam(
+                student = request.user.student,
+                exam=exam
+            )
+            new_studentexam.save()
+            return redirect('student_exam', id=id)
         context = {
+                    'exam': exam
+                }
+        
+        try:
+            student_exam = StudentExam.objects.get(
+                student=request.user.student,
+                exam=exam
+            )
+            context['is_join'] = False
+            context['student_exam'] = student_exam
+        except:
+            if exam.status != 'open':
+                context['is_join'] = False
+            else:
+                context['is_join'] = True
 
-            'exam': exam
 
-        }
+      
         return render(request, 'exam/exam_student.html', context)
+
+    
+@login_required
+def student_exam(request,id):
+    now = timezone.now()
+    exam = Exam.objects.get(pk=id)
+
+    studentexam = StudentExam.objects.get(
+        student=request.user.student,
+        exam=exam
+    )
+    questions = Question.objects.filter(exam_c=id)
+
+    end_time = studentexam.joined + datetime.timedelta(minutes = exam.duration)
+
+    limit_time = end_time - now
+    limit_minutes = (limit_time.seconds % 3600) // 60
+    if limit_minutes > 0:
+        is_acept_test = True
+    else:
+        is_acept_test = False
+
+    if is_acept_test:
+        if request.method == "POST" and 'saveChoiceBtn' in request.POST:
+            choice_id = "flexRadioDefault" + str(request.POST['saveChoiceBtn'])
+            question = Question.objects.get(pk=request.POST['saveChoiceBtn'])
+            choiced = request.POST[choice_id]
+            choice = Choice.objects.get(pk=choiced)
+
+            try:
+                new_studentexamquestion = StudentExamQuestion.objects.get(
+                    student_exam=studentexam,
+                    question=question,
+                )
+            except:
+                new_studentexamquestion = StudentExamQuestion(
+                    student_exam=studentexam,
+                    question=question
+                )
+            new_studentexamquestion.student_choice = choice
+            new_studentexamquestion.save()
+            return redirect('student_exam', id=id)
+        
+    context = {
+        'questions': questions,
+        'studentexam': studentexam,
+        'end_time': end_time,
+        'limit_time': limit_minutes,
+        'is_acept_test': is_acept_test
+
+    }
+    return render(request, 'exam/student_join_exam.html', context)
