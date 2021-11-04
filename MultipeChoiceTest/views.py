@@ -146,6 +146,10 @@ def exam(request, id):
     subject_id = exam.subject.id
     if is_teacher:
         exam = Exam.objects.get(pk=id, teacher=lgin_user.teacher)
+        exam_student_is_finish = StudentExam.objects.filter(
+            exam=exam,
+            is_finish=True
+        ).count()
 
         exam_form = ExamForm(request.POST or None, instance=exam)
         questions = Question.objects.filter(exam_c=exam)
@@ -219,7 +223,8 @@ def exam(request, id):
             'exam': exam,
             'exam_form': exam_form,
             'questions': questions,
-            'question_form': question_form
+            'question_form': question_form,
+            'exam_student_is_finish': exam_student_is_finish
 
         }
 
