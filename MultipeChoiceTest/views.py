@@ -5,18 +5,11 @@ from django.shortcuts import redirect
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
-
 from django.contrib import messages
-
 import datetime
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-
-
-# Create your views here.
-    
-
 
 
 # Tài khoản đăng nhập là giáo viên hay học viên
