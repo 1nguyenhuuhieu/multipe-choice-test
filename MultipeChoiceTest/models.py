@@ -51,7 +51,7 @@ class Exam(ExamAbstract):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     date_created = models.DateField(auto_now=True)
-    duration = models.IntegerField(verbose_name="Thời gian làm bài thi")
+    duration = models.IntegerField(verbose_name="Thời gian làm bài thi", help_text="Tính bằng phút")
     STATUS_CHOICES = [
         ('wait', 'Chưa mở'),
         ('open', 'Đang mở'),

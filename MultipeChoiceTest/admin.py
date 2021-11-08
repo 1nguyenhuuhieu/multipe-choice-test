@@ -21,3 +21,7 @@ class TeacherAdmin(admin.ModelAdmin):
 @admin.register(StudentExam)
 class StudentExamAdmin(admin.ModelAdmin):
     list_display =  ('student', 'exam', 'joined', 'is_finish')
+
+@admin.register(Exam)
+class Exam(admin.ModelAdmin):
+    pass
