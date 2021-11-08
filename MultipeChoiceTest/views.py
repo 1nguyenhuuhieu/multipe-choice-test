@@ -10,12 +10,27 @@ from django.contrib import messages
 
 import datetime
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+
 
 # Create your views here.
+    
+
+
+
+# Tài khoản đăng nhập là giáo viên hay học viên
+def is_teacher(user_id):
+    user = User.objects.get(pk=user_id)
+    teacher = get_object_or_404(Teacher, user=user)
+    if teacher:
+        return True
+
 
 @login_required
 def index(request):
     login_user = request.user
+    print(is_teacher(login_user.id))
 
     teacher = Teacher.objects.filter(user=login_user)
     student = Student.objects.filter(user=login_user)
@@ -34,6 +49,15 @@ def index(request):
         'subjects': subjects
     }
     return render(request, 'index.html', context)
+
+
+@login_required
+def subjects(request):
+    context = {
+
+    }
+
+    return render(request, 'subject/subjects.html', context)
 
 
 @login_required
