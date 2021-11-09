@@ -23,7 +23,6 @@ def is_teacher(user_id):
 @login_required
 def index(request):
     login_user = request.user
-    print(is_teacher(login_user.id))
 
     teacher = Teacher.objects.filter(user=login_user)
     student = Student.objects.filter(user=login_user)
@@ -288,9 +287,7 @@ def student_exam(request,id):
         exam=exam
     )
     questions = Question.objects.filter(exam_c=id)
-
     end_time = studentexam.joined + datetime.timedelta(minutes = exam.duration)
-
     limit_time = end_time - now
     if limit_time.days < 0:
         limit_minutes = 0
@@ -327,13 +324,24 @@ def student_exam(request,id):
         studentexam.is_finish = True
         studentexam.save()
         return redirect('student_exam', id=id)
-        
+
+    if studentexam.is_finish:
+        correct_choices = StudentExamQuestion.objects.filter(
+            question__in = questions,
+            student_exam__student = request.user.student,
+            student_choice__is_correct = True
+        )
+    else:
+        correct_choices = 0
+
+
     context = {
         'questions': questions,
         'studentexam': studentexam,
         'end_time': end_time,
         'limit_time': limit_minutes,
-        'is_acept_test': is_acept_test
+        'is_acept_test': is_acept_test,
+        'correct_choices': correct_choices
 
     }
     return render(request, 'exam/student_join_exam.html', context)
