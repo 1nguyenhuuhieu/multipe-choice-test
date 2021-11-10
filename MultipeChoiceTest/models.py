@@ -35,16 +35,13 @@ class Question(ExamAbstract):
     def __str__(self):
         return self.title
 
-    
 
 class Choice(ExamAbstract):
     question_c = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.title
-
   
 
 class Exam(ExamAbstract):
@@ -58,12 +55,10 @@ class Exam(ExamAbstract):
         ('close', 'Đã đóng'),
     ]
 
-
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='wait')
 
     def __str__(self):
         return '%s - %s - %s' % (self.title, self.subject, self.teacher)
-
 
 
 class StudentExam(models.Model):
@@ -74,15 +69,9 @@ class StudentExam(models.Model):
     
     class Meta:
         unique_together = ['student', 'exam']
-
         
-
 
 class StudentExamQuestion(models.Model):
     student_exam = models.ForeignKey(StudentExam, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     student_choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-
-
-    
-
