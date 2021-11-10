@@ -21,10 +21,10 @@ class ExamForm(ModelForm):
         'teacher': forms.HiddenInput(),
         'subject': forms.HiddenInput(),
         'title': forms.TextInput(attrs={
-            'class': 'form-control'
+            'class': 'form-control mb-3'
         }),
         'duration': forms.NumberInput(attrs={
-            'class': 'form-control'
+            'class': 'form-control mb-3'
         }),
         'status': forms.Select(attrs={
             'class': 'form-select'
